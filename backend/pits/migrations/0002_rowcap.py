@@ -1,0 +1,28 @@
+import django.db.models.deletion
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ("pits", "0001_initial"),
+    ]
+    operations = [
+        migrations.CreateModel(
+            name="RowCap",
+            fields=[
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False)),
+                ("row", models.IntegerField()),
+                ("cap", models.PositiveIntegerField(default=1)),
+                ("enabled", models.BooleanField(default=True)),
+                (
+                    "yard",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="row_caps",
+                        to="pits.yard",
+                    ),
+                ),
+            ],
+            options={"unique_together": {("yard", "row")}},
+        ),
+    ]
