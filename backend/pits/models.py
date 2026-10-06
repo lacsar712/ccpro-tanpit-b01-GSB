@@ -34,6 +34,18 @@ class Pit(models.Model):
         unique_together = ("yard", "code")
 
 
+class RowCap(models.Model):
+    """每一行「鞣制中」并存上限与开关；开关关掉则不设防。"""
+
+    yard = models.ForeignKey(Yard, on_delete=models.CASCADE, related_name="row_caps")
+    row = models.IntegerField()
+    cap = models.PositiveIntegerField(default=1)
+    enabled = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ("yard", "row")
+
+
 class LiquorSample(models.Model):
     pit = models.ForeignKey(Pit, on_delete=models.CASCADE, related_name="samples")
     taken_at = models.DateTimeField(auto_now_add=True)
